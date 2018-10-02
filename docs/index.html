@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <title>色変更</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+
+  <div class="color-box"></div>
+
+  <button class="button">色が変わります</button>
+
+  <script>
+
+    class Color {
+      constructor() {
+        /* エレメント取得 */
+        this.color_box = document.querySelector('.color-box');
+        this.button = document.querySelector('button');
+
+        this.color_box.classList.add('BackRed');
+
+        this.isColorchange = false;
+
+        this.bind();
+      }
+
+      bind() {
+        this.button.addEventListener('click', e => {
+          this.change();
+        });
+      }
+
+      change() {
+        if (this.isColorchange) {
+          this.color_box.classList.remove('BackBlue');
+          this.color_box.classList.add('BackRed');
+          this.isColorchange = false;
+        } else {
+          this.color_box.classList.remove('BackRed');
+          this.color_box.classList.add('BackBlue');
+          this.isColorchange = true;
+        }
+      }
+    }
+
+    const changeColor = new Color();
+
+  </script>
+</body>
+
+</html>
