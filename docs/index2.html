@@ -38,7 +38,9 @@
         this.colors = ['red', 'blue', 'yellow', 'green'];
         this.text = document.querySelector('.color-count');
 
+
         this.count = 0;
+        this.isColorchange = false;
 
 
         this.bind();
@@ -51,8 +53,7 @@
 
         [].forEach.call(this.button, button => {
           button.addEventListener('click', (e) => {
-            this.reset();
-            this.addCount();
+            this.colorCheck(e.currentTarget.dataset.value);
             this.change(e.currentTarget.dataset.value);
           });
         });
@@ -65,12 +66,28 @@
       }
 
       change(code) {
-        this.color_box.classList.add(this.colors[code]);
+        if (this.isColorchange) {
+          return;
+        } else {
+          this.reset();
+          this.addCount();
+
+          this.color_box.classList.add(this.colors[code]);
+        };
       }
 
       addCount() {
         this.count++;
         this.text.textContent = `色を変えた回数は ${this.count}回 です`;
+      }
+
+      colorCheck(color) {
+        if (this.color_box.classList[1] === this.colors[color]) {
+          this.isColorchange = true;
+        } else {
+          this.isColorchange = false;
+        }
+        ;
       }
     }
 
