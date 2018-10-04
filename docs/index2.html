@@ -13,16 +13,16 @@
 
   <ul class="button-list">
     <li>
-      <button class="button">赤</button>
+      <button class="button" data-color="blue">青</button>
     </li>
     <li>
-      <button class="button">青</button>
+      <button class="button" data-color="yellow">黄</button>
     </li>
     <li>
-      <button class="button">黄</button>
+      <button class="button" data-color="green">緑</button>
     </li>
     <li>
-      <button class="button">緑</button>
+      <button class="button" data-color="red">赤</button>
     </li>
   </ul>
 
@@ -30,68 +30,52 @@
 
   <script>
 
-    class Color {
+    class ColorChanger {
       constructor() {
         /* エレメント取得 */
         this.color_box = document.querySelector('.color-box');
         this.button = document.querySelectorAll('.button');
-        this.colors = ['red', 'blue', 'yellow', 'green'];
         this.text = document.querySelector('.color-count');
 
 
+        this.color = null;
         this.count = 0;
-        this.isColorchange = false;
 
 
         this.bind();
       }
 
       bind() {
-        this.button.forEach((currentValue, index) => {
-          currentValue.dataset.value = index;
-        });
-
         [].forEach.call(this.button, button => {
           button.addEventListener('click', (e) => {
-            this.colorCheck(e.currentTarget.dataset.value);
-            this.change(e.currentTarget.dataset.value);
+            if (this.color_box.classList.contains(e.currentTarget.dataset.color)) return;
+            this.resetClass();
+            this.color = e.currentTarget.dataset.color;
+
+            this.addCount();
+            this.changeColor(e.currentTarget.dataset.color);
           });
         });
       }
 
-      reset() {
-        this.colors.forEach((currentValue) => {
-          this.color_box.classList.remove(currentValue);
-        });
+      /* クラス名を消去します */
+      resetClass() {
+        this.color_box.classList.remove(this.color);
       }
 
-      change(code) {
-        if (this.isColorchange) {
-          return;
-        } else {
-          this.reset();
-          this.addCount();
-
-          this.color_box.classList.add(this.colors[code]);
-        };
+      /* 背景色を変えます */
+      changeColor(colorName) {
+        this.color_box.classList.add(colorName);
       }
 
+      /* 背景色を変えた回数をカウントします */
       addCount() {
         this.count++;
         this.text.textContent = `色を変えた回数は ${this.count}回 です`;
       }
-
-      colorCheck(color) {
-        if (this.color_box.classList[1] === this.colors[color]) {
-          this.isColorchange = true;
-        } else {
-          this.isColorchange = false;
-        }
-        ;
-      }
     }
 
-    const changeColor = new Color();
+    const changeColor = new ColorChanger();
 
   </script>
 </body>
