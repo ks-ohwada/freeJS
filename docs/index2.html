@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <title>色変更 ver2</title>
+  <link rel="stylesheet" href="./css/style2.css">
+</head>
+
+<body>
+
+  <div class="color-box"></div>
+
+  <ul class="button-list">
+    <li>
+      <button class="button">赤</button>
+    </li>
+    <li>
+      <button class="button">青</button>
+    </li>
+    <li>
+      <button class="button">黄</button>
+    </li>
+    <li>
+      <button class="button">緑</button>
+    </li>
+  </ul>
+
+  <p class="color-count">色を変えた回数は 0回 です</p>
+
+  <script>
+
+    class Color {
+      constructor() {
+        /* エレメント取得 */
+        this.color_box = document.querySelector('.color-box');
+        this.button = document.querySelectorAll('.button');
+        this.colors = ['red', 'blue', 'yellow', 'green'];
+        this.text = document.querySelector('.color-count');
+
+        this.count = 0;
+
+
+        this.bind();
+      }
+
+      bind() {
+        this.button.forEach((currentValue, index) => {
+          currentValue.dataset.value = index;
+        });
+
+        [].forEach.call(this.button, button => {
+          button.addEventListener('click', (e) => {
+            this.reset();
+            this.addCount();
+            this.change(e.currentTarget.dataset.value);
+          });
+        });
+      }
+
+      reset() {
+        this.colors.forEach((currentValue) => {
+          this.color_box.classList.remove(currentValue);
+        });
+      }
+
+      change(code) {
+        this.color_box.classList.add(this.colors[code]);
+      }
+
+      addCount() {
+        this.count++;
+        this.text.textContent = `色を変えた回数は ${this.count}回 です`;
+      }
+    }
+
+    const changeColor = new Color();
+
+  </script>
+</body>
+
+</html>
